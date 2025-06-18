@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puntos Faciales y Emociones Ana Franco</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(145deg, #88c9f9, #b8e994, #a0e8ff);
+            margin: 0;
+            padding: 0;
+            color: #2d2d2d;
+            animation: backgroundMove 10s infinite alternate;
+        }
+
+        @keyframes backgroundMove {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .wrapper {
+            width: 90%;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        h1, h2 {
+            text-align: center;
+            font-weight: bold;
+            color: #1b4b56;
+            text-shadow: 0 3px 5px rgba(255, 255, 255, 0.5);
+            font-size: 2.5em;
+        }
+
+        .upload-area {
+            background: linear-gradient(120deg, #88c9f9, #3caea3);
+            color: white;
+            padding: 50px;
+            border-radius: 25px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transform: rotate(-2deg);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: rotate(-2deg) translateY(0);
+            }
+            50% {
+                transform: rotate(2deg) translateY(-10px);
+            }
+        }
+
+        .upload-area input[type="file"] {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            border: 3px dashed #ffffff;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            cursor: pointer;
+            font-size: 1.2em;
+        }
+
+        .upload-area button {
+            margin-top: 20px;
+            background: #3caea3;
+            color: #ffffff;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: bold;
+            transition: transform 0.2s ease, background-color 0.3s ease;
+        }
+
+        .upload-area button:hover {
+            background: #88c9f9;
+            transform: scale(1.1);
+        }
+
+        .image-section, .history-section, .result-section {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .image-display {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .image-display img {
+            max-width: 50%;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+            transition: transform 0.4s ease;
+        }
+
+        .image-display img:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        .image-collection {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+            justify-items: center;
+        }
+
+        .image-collection img {
+            width: 180px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .image-collection img:hover {
+            transform: rotate(-2deg) scale(1.1);
+        }
+
+        @media screen and (max-width: 768px) {
+            .upload-area button {
+                font-size: 1em;
+            }
+
+            .image-display img {
+                max-width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sección de subir imagen -->
+        <div class="upload-area">
+            <h1>Sube una Imagen</h1>
+            <form id="uploadForm" enctype="multipart/form-data">
+                <input type="file" id="image" name="image" accept="image/*">
+                <button type="submit">¡Analizar!</button>
+            </form>
+        </div>
+
+        <!-- Sección de imagen original -->
+        <div class="image-section">
+            <h2>Tu Imagen</h2>
+            <div class="image-display">
+                <img id="originalImage" src="" alt="Imagen Original">
+            </div>
+        </div>
+
+        <!-- Sección de historial de imágenes -->
+        <div class="history-section">
+            <h2>Imágenes anteriores</h2>
+            <div id="historicoImages" class="image-collection"></div>
+        </div>
+
+        <!-- Sección de imágenes procesadas -->
+        <div class="result-section">
+            <h2>Resultado</h2>
+            <div id="processedImages" class="image-collection"></div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
